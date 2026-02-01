@@ -1,0 +1,21 @@
+.DS_Store
+node_modules
+dist
+dist-ssr
+coverage
+.env
+.env.*
+
+# Yarn Berry (no zero-installs)
+.pnp.*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# keep these committed if present
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+

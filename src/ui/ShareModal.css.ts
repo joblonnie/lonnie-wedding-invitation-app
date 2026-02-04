@@ -76,6 +76,7 @@ export const input = style({
 export const buttons = style({
   display: "flex",
   gap: 10,
+  marginBottom: 12,
 });
 
 export const button = style({
@@ -89,11 +90,11 @@ export const button = style({
   transition: "all 0.2s ease",
 });
 
-export const cancelButton = style([
+export const kakaoButton = style([
   button,
   {
-    background: vars.color.background,
-    color: vars.color.text,
+    background: "#FEE500",
+    color: "#000",
   },
 ]);
 
@@ -104,3 +105,22 @@ export const confirmButton = style([
     color: "#fff",
   },
 ]);
+
+export const cancelButton = style({
+  width: "100%",
+  padding: "10px 16px",
+  fontSize: 13,
+  fontWeight: 400,
+  borderRadius: 8,
+  border: "none",
+  cursor: "pointer",
+  background: "transparent",
+  color: vars.color.text,
+  opacity: 0.6,
+  transition: "opacity 0.2s ease",
+  selectors: {
+    "&:hover": {
+      opacity: 1,
+    },
+  },
+});

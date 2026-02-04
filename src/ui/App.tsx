@@ -21,6 +21,7 @@ import { MapSection } from "./MapSection";
 import { PhotoGallery } from "./PhotoGallery";
 import { OurStory } from "./OurStory";
 import { CelebrationButton } from "./CelebrationButton";
+import { BulkShare } from "./BulkShare";
 
 function getUrlParams() {
   return new URLSearchParams(window.location.search);
@@ -42,7 +43,12 @@ function readRecipientName(): string | null {
   return getUrlParams().get("to");
 }
 
+function readMode(): "bulk" | "invitation" {
+  return getUrlParams().get("mode") === "bulk" ? "bulk" : "invitation";
+}
+
 export function App() {
+  const [mode, setMode] = useState<"bulk" | "invitation">(() => readMode());
   const invitation = DEFAULT_INVITATION;
   const [recipientName] = useState<string | null>(() => readRecipientName());
   const [language, setLanguage] = useState<Language>(
@@ -69,6 +75,24 @@ export function App() {
     };
   }, [themeClass]);
 
+  const handleGoToBulk = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("mode", "bulk");
+    window.history.pushState({}, "", url.toString());
+    setMode("bulk");
+  };
+
+  const handleBackFromBulk = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("mode");
+    window.history.pushState({}, "", url.toString());
+    setMode("invitation");
+  };
+
+  if (mode === "bulk") {
+    return <BulkShare imageUrl={invitation.meta.imageUrl} onBack={handleBackFromBulk} />;
+  }
+
   return (
     <div className={appContainer}>
       <LanguagePicker value={language} onChange={setLanguage} />
@@ -93,7 +117,7 @@ export function App() {
               {invitation.event.whereText[language]}
             </p>
           </div>
-          <ShareActions invitation={invitation} language={language} />
+          <ShareActions invitation={invitation} language={language} onBulkShare={handleGoToBulk} />
           <CelebrationButton />
         </section>
 

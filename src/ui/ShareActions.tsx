@@ -29,9 +29,11 @@ function buildGoogleCalendarUrl(
 export function ShareActions({
   invitation,
   language,
+  onBulkShare,
 }: {
   invitation: Invitation;
   language: Language;
+  onBulkShare?: () => void;
 }) {
   const strings = t(language);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -100,11 +102,22 @@ export function ShareActions({
         >
           {strings.share}
         </button>
+
+        {onBulkShare && (
+          <button
+            className={actionButton}
+            type="button"
+            onClick={onBulkShare}
+          >
+            {strings.bulkShare}
+          </button>
+        )}
       </div>
 
       {showShareModal && (
         <ShareModal
           language={language}
+          imageUrl={invitation.meta.imageUrl}
           onClose={() => setShowShareModal(false)}
           onShare={handleShare}
         />

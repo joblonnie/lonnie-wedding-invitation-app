@@ -33,6 +33,9 @@ type Strings = {
   recipientName: string;
   recipientPlaceholder: string;
   cancel: string;
+  kakaoShare: string;
+  copyLink: string;
+  bulkShare: string;
 };
 
 const DICT: Record<Language, Strings> = {
@@ -69,6 +72,9 @@ const DICT: Record<Language, Strings> = {
     recipientName: "받는 분 성함",
     recipientPlaceholder: "예: 홍길동",
     cancel: "취소",
+    kakaoShare: "카카오톡",
+    copyLink: "링크 복사",
+    bulkShare: "단체 전송",
   },
   en: {
     title: "Wedding Invitation",
@@ -103,6 +109,9 @@ const DICT: Record<Language, Strings> = {
     recipientName: "Recipient Name",
     recipientPlaceholder: "e.g. John Doe",
     cancel: "Cancel",
+    kakaoShare: "KakaoTalk",
+    copyLink: "Copy Link",
+    bulkShare: "Bulk Send",
   },
   zh: {
     title: "婚礼请柬",
@@ -137,6 +146,9 @@ const DICT: Record<Language, Strings> = {
     recipientName: "收件人姓名",
     recipientPlaceholder: "例如: 张三",
     cancel: "取消",
+    kakaoShare: "KakaoTalk",
+    copyLink: "复制链接",
+    bulkShare: "批量发送",
   },
 };
 

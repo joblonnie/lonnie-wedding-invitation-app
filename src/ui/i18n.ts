@@ -29,6 +29,10 @@ type Strings = {
   kakaoNavi: string;
   tmap: string;
   naverMap: string;
+  shareTitle: string;
+  recipientName: string;
+  recipientPlaceholder: string;
+  cancel: string;
 };
 
 const DICT: Record<Language, Strings> = {
@@ -61,6 +65,10 @@ const DICT: Record<Language, Strings> = {
     kakaoNavi: "카카오내비",
     tmap: "티맵",
     naverMap: "네이버지도",
+    shareTitle: "청첩장 공유",
+    recipientName: "받는 분 성함",
+    recipientPlaceholder: "예: 홍길동",
+    cancel: "취소",
   },
   en: {
     title: "Wedding Invitation",
@@ -91,6 +99,10 @@ const DICT: Record<Language, Strings> = {
     kakaoNavi: "Kakao Navi",
     tmap: "T-map",
     naverMap: "Naver Map",
+    shareTitle: "Share Invitation",
+    recipientName: "Recipient Name",
+    recipientPlaceholder: "e.g. John Doe",
+    cancel: "Cancel",
   },
   zh: {
     title: "婚礼请柬",
@@ -121,6 +133,10 @@ const DICT: Record<Language, Strings> = {
     kakaoNavi: "Kakao导航",
     tmap: "T-map",
     naverMap: "Naver地图",
+    shareTitle: "分享请柬",
+    recipientName: "收件人姓名",
+    recipientPlaceholder: "例如: 张三",
+    cancel: "取消",
   },
 };
 

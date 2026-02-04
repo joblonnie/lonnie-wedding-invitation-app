@@ -30,6 +30,15 @@ globalStyle("h1, h2, h3", {
   letterSpacing: "-0.02em",
 });
 
+// 스크롤바 숨기기 (스크롤 기능은 유지)
+globalStyle("::-webkit-scrollbar", {
+  display: "none",
+});
+
+globalStyle("html", {
+  scrollbarWidth: "none",
+});
+
 export const fadeIn = keyframes({
   from: { opacity: 0, transform: "translateY(20px)" },
   to: { opacity: 1, transform: "translateY(0)" },

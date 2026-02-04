@@ -12,17 +12,16 @@ import {
   floatingHeart,
 } from "./CelebrationButton.css";
 import {
+  initAuth,
   subscribeToCelebrationCount,
+  subscribeToUserLiked,
   incrementCelebration,
-  decrementCelebration,
 } from "../firebase";
 
 type FloatingHeart = {
   id: number;
   x: number;
 };
-
-const LIKED_KEY = "wedding_celebration_liked";
 
 // 미니 하트 위치 (메인 하트 주변)
 const MINI_HEART_POSITIONS = [
@@ -35,15 +34,18 @@ const MINI_HEART_POSITIONS = [
 ];
 
 export function CelebrationButton() {
-  const [liked, setLiked] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem(LIKED_KEY) === "true";
-    }
-    return false;
-  });
+  const [isReady, setIsReady] = useState(false);
+  const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
   const [hearts, setHearts] = useState<FloatingHeart[]>([]);
   const [animating, setAnimating] = useState(false);
+
+  // Firebase 인증 초기화
+  useEffect(() => {
+    initAuth()
+      .then(() => setIsReady(true))
+      .catch(console.error);
+  }, []);
 
   // Firebase에서 실시간 카운트 구독
   useEffect(() => {
@@ -54,9 +56,19 @@ export function CelebrationButton() {
     return () => unsubscribe();
   }, []);
 
+  // Firebase에서 사용자 좋아요 여부 구독
+  useEffect(() => {
+    if (!isReady) return;
+
+    const unsubscribe = subscribeToUserLiked((userLiked) => {
+      setLiked(userLiked);
+    });
+
+    return () => unsubscribe();
+  }, [isReady]);
+
   const handleClick = useCallback(async () => {
     setLiked(true);
-    localStorage.setItem(LIKED_KEY, "true");
     setAnimating(true);
     setTimeout(() => setAnimating(false), 400);
 

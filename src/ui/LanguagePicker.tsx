@@ -53,7 +53,7 @@ export function LanguagePicker({
         aria-label="Change language"
         aria-expanded={isOpen}
       >
-        <span>{currentOption.flag}</span>
+        <span>🌐</span>
       </button>
 
       {isOpen && (

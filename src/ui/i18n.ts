@@ -15,6 +15,7 @@ type Strings = {
   openInMaps: string;
   address: string;
   addToCalendar: string;
+  googleCalendar: string;
   share: string;
   copiedLink: string;
   celebrate: string;
@@ -46,6 +47,7 @@ const DICT: Record<Language, Strings> = {
     openInMaps: "지도 앱에서 열기",
     address: "주소",
     addToCalendar: "일정 등록",
+    googleCalendar: "구글 캘린더",
     share: "공유",
     copiedLink: "링크를 복사했어요.",
     celebrate: "축하하기",
@@ -75,6 +77,7 @@ const DICT: Record<Language, Strings> = {
     openInMaps: "Open in maps",
     address: "Address",
     addToCalendar: "Add to calendar",
+    googleCalendar: "Google Calendar",
     share: "Share",
     copiedLink: "Link copied.",
     celebrate: "Celebrate",
@@ -104,6 +107,7 @@ const DICT: Record<Language, Strings> = {
     openInMaps: "在地图中打开",
     address: "地址",
     addToCalendar: "添加到日历",
+    googleCalendar: "谷歌日历",
     share: "分享",
     copiedLink: "已复制链接。",
     celebrate: "祝福",

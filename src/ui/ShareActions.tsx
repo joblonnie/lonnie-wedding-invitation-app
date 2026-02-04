@@ -3,6 +3,27 @@ import { downloadIcs } from "./calendar/downloadIcs";
 import { actionRow, actionButton } from "./ShareActions.css";
 import type { Invitation } from "./invitation/types";
 
+function formatDateForGoogle(date: Date): string {
+  return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+}
+
+function buildGoogleCalendarUrl(
+  title: string,
+  start: Date,
+  end: Date,
+  location: string,
+  description: string
+): string {
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: title,
+    dates: `${formatDateForGoogle(start)}/${formatDateForGoogle(end)}`,
+    location,
+    details: description,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 export function ShareActions({
   invitation,
   language,
@@ -29,6 +50,22 @@ export function ShareActions({
       >
         {strings.addToCalendar}
       </button>
+
+      <a
+        className={actionButton}
+        href={buildGoogleCalendarUrl(
+          invitation.meta.title[language],
+          invitation.event.start,
+          invitation.event.end,
+          invitation.event.locationIcs,
+          invitation.meta.description[language]
+        )}
+        target="_blank"
+        rel="noreferrer"
+        style={{ textDecoration: "none" }}
+      >
+        {strings.googleCalendar}
+      </a>
 
       <button
         className={actionButton}

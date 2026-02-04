@@ -29,3 +29,13 @@ export const midnightThemeClass = createTheme(vars, {
     primary: "#a78bfa",
   },
 });
+
+export const botanicalThemeClass = createTheme(vars, {
+  color: {
+    background: "#f8f9f8",
+    surface: "#ffffff",
+    text: "#2c2c2c",
+    border: "rgba(0,0,0,0.08)",
+    primary: "#5a7d5a",
+  },
+});

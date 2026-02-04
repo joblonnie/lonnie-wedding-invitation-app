@@ -1,39 +1,79 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "./theme/theme.css";
+import { fadeIn } from "./theme/global.css";
 
 export const appContainer = style({
   minHeight: "100vh",
-  display: "grid",
-  placeItems: "center",
-  padding: 24,
-  background: `linear-gradient(180deg, ${vars.color.background} 0%, ${vars.color.surface} 70%)`,
+  background: vars.color.surface,
 });
 
 export const card = style({
-  width: "min(720px, 100%)",
-  borderRadius: 16,
-  padding: 20,
-  background: vars.color.surface,
-  border: `1px solid ${vars.color.border}`,
-  boxShadow: "0 8px 30px rgba(0,0,0,0.08)",
+  width: "min(560px, 100%)",
+  margin: "0 auto",
+  padding: "60px 24px 80px",
 });
 
 export const headerRow = style({
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
-  justifyContent: "space-between",
-  gap: 12,
-  flexWrap: "wrap",
+  textAlign: "center",
+  gap: 16,
+  marginBottom: 48,
+  animation: `${fadeIn} 0.8s ease-out`,
+});
+
+export const headerTitle = style({
+  fontSize: 13,
+  fontWeight: 500,
+  textTransform: "uppercase",
+  letterSpacing: "0.15em",
+  color: vars.color.primary,
+  margin: 0,
+});
+
+export const greeting = style({
+  fontSize: 14,
+  fontWeight: 400,
+  color: vars.color.text,
+  opacity: 0.6,
+  margin: "0 0 8px",
+});
+
+export const headerSubtitle = style({
+  fontSize: 14,
+  opacity: 0.5,
+  margin: 0,
+  fontWeight: 400,
 });
 
 export const row = style({
   display: "flex",
   flexDirection: "column",
-  gap: 6,
+  gap: 4,
+  textAlign: "center",
+});
+
+export const section = style({
+  marginTop: 56,
+  animation: `${fadeIn} 0.8s ease-out`,
+  animationFillMode: "both",
 });
 
 export const sectionTitle = style({
-  marginTop: 18,
-  marginBottom: 8,
-  fontSize: 16,
+  fontSize: 11,
+  fontWeight: 600,
+  textTransform: "uppercase",
+  letterSpacing: "0.2em",
+  color: vars.color.primary,
+  marginTop: 0,
+  marginBottom: 24,
+  textAlign: "center",
+});
+
+export const divider = style({
+  width: 40,
+  height: 1,
+  background: vars.color.border,
+  margin: "48px auto",
 });

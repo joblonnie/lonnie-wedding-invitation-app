@@ -1,5 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { appContainer, card, headerRow, row, sectionTitle } from "./App.css";
+import {
+  appContainer,
+  card,
+  headerRow,
+  headerTitle,
+  headerSubtitle,
+  greeting as greetingStyle,
+  row,
+  section,
+  sectionTitle,
+  divider,
+} from "./App.css";
 import { detectDefaultLanguage, type Language, t } from "../ui/i18n";
 import { DEFAULT_INVITATION } from "../ui/invitation/defaultInvitation";
 import { setSocialMeta } from "../ui/meta/setSocialMeta";
@@ -8,16 +19,35 @@ import { themeClassFromName, type ThemeName } from "./theme/theme";
 import { LanguagePicker } from "./LanguagePicker";
 import { MapSection } from "./MapSection";
 import { PhotoGallery } from "./PhotoGallery";
+import { OurStory } from "./OurStory";
+import { CelebrationButton } from "./CelebrationButton";
+
+function getUrlParams() {
+  return new URLSearchParams(window.location.search);
+}
 
 function readThemeOverride(): ThemeName | null {
-  const value = new URLSearchParams(window.location.search).get("theme");
-  if (value === "classic" || value === "midnight") return value;
+  const value = getUrlParams().get("theme");
+  if (value === "classic" || value === "midnight" || value === "botanical") return value;
   return null;
+}
+
+function readLanguageOverride(): Language | null {
+  const value = getUrlParams().get("lang");
+  if (value === "ko" || value === "en" || value === "zh") return value;
+  return null;
+}
+
+function readRecipientName(): string | null {
+  return getUrlParams().get("to");
 }
 
 export function App() {
   const invitation = DEFAULT_INVITATION;
-  const [language, setLanguage] = useState<Language>(() => detectDefaultLanguage());
+  const [recipientName] = useState<string | null>(() => readRecipientName());
+  const [language, setLanguage] = useState<Language>(
+    () => readLanguageOverride() ?? detectDefaultLanguage()
+  );
   const [themeName] = useState<ThemeName>(() => readThemeOverride() ?? invitation.theme);
   const themeClass = themeClassFromName(themeName);
 
@@ -41,28 +71,49 @@ export function App() {
 
   return (
     <div className={appContainer}>
+      <LanguagePicker value={language} onChange={setLanguage} />
       <div className={card}>
-        <div className={headerRow}>
-          <div>
-            <h1>{strings.title}</h1>
-            <p>{strings.subtitle}</p>
+        <header className={headerRow}>
+          {recipientName && (
+            <p className={greetingStyle}>{strings.greeting(recipientName)}</p>
+          )}
+          <p className={headerTitle}>{strings.title}</p>
+          <OurStory invitation={invitation} language={language} />
+        </header>
+
+        <div className={divider} />
+
+        <section className={section} style={{ animationDelay: "0.1s" }}>
+          <h2 className={sectionTitle}>{strings.eventTitle}</h2>
+          <div className={row}>
+            <p style={{ fontSize: 18, fontWeight: 300, margin: 0 }}>
+              {invitation.event.whenText[language]}
+            </p>
+            <p style={{ fontSize: 15, opacity: 0.7, margin: "8px 0 0" }}>
+              {invitation.event.whereText[language]}
+            </p>
           </div>
-          <LanguagePicker value={language} onChange={setLanguage} />
-        </div>
+          <ShareActions invitation={invitation} language={language} />
+          <CelebrationButton />
+        </section>
 
-        <h2 className={sectionTitle}>{strings.eventTitle}</h2>
-        <div className={row}>
-          <p>{invitation.event.whenText[language]}</p>
-          <p>{invitation.event.whereText[language]}</p>
-        </div>
+        <div className={divider} />
 
-        <ShareActions invitation={invitation} language={language} />
+        <section className={section} style={{ animationDelay: "0.2s" }}>
+          <h2 className={sectionTitle}>{strings.photosTitle}</h2>
+          <PhotoGallery invitation={invitation} language={language} />
+        </section>
 
-        <h2 className={sectionTitle}>{strings.photosTitle}</h2>
-        <PhotoGallery invitation={invitation} language={language} />
+        <div className={divider} />
 
-        <h2 className={sectionTitle}>{strings.mapTitle}</h2>
-        <MapSection invitation={invitation} language={language} />
+        <section className={section} style={{ animationDelay: "0.3s" }}>
+          <h2 className={sectionTitle}>{strings.mapTitle}</h2>
+          <MapSection invitation={invitation} language={language} />
+        </section>
+
+        <p className={headerSubtitle} style={{ marginTop: 56 }}>
+          {strings.subtitle}
+        </p>
       </div>
     </div>
   );

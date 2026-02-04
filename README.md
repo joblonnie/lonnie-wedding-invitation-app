@@ -1,20 +1,107 @@
-# wedding-invitation-app
+# Wedding Invitation App
 
-청첩장 웹앱(모바일/웹) 프로젝트.
+모던 미니멀 스타일의 모바일 청첩장 웹앱
 
-## 기획 / 요구사항
-1. 웹/모바일에서 모두 확인할 수 있어야 한다. (반응형)
-2. 구성되는 모든 텍스트/사진은 수정 가능해야 하고, 템플릿화하여 내 청첩장 외 다른 청첩장에도 테마(theme)만 바꿔 재사용할 수 있어야 한다.
-3. 다국어(한국어/중국어/영어)를 지원하고, 접속 국가(로케일)에 맞게 기본 언어가 자동으로 설정되어야 한다.
-4. 링크 공유 시 Open Graph/Twitter meta 데이터(대표 이미지/문구 등)를 자유롭게 설정할 수 있어야 한다.
-   - 링크를 받았을 때 `일정 등록`, `공유` 등 액션 버튼이 제공되어야 한다.
-5. React 19 + TypeScript를 사용한다.
-6. 빌드는 Vite 기반이며, GitHub Actions로 CI/CD가 가능해야 한다.
-7. 스타일은 `vanilla-extract`를 사용한다.
-8. 패키지 매니저는 Yarn Berry를 사용한다.
+## 주요 기능
+
+- **모던 미니멀 디자인** - 깔끔한 타이포그래피, 넓은 여백, 부드러운 애니메이션
+- **다국어 지원** - 한국어/영어/중국어 자동 감지 및 전환
+- **테마 시스템** - classic, midnight, botanical 테마 지원
+- **커플 스토리** - 처음 만난 날, 함께한 시간, 결혼까지 D-Day 타임라인
+- **사진 갤러리** - 캐러셀 형태의 사진 슬라이더
+- **오시는 길** - 대중교통/자가용 탭, 카카오내비/T맵/네이버지도 연동
+- **축하하기** - 하트 애니메이션 + Firebase 실시간 카운트
+- **일정 등록** - ICS 파일 다운로드
+- **공유 기능** - Web Share API / 클립보드 복사
+
+## URL 파라미터
+
+```
+?to=홍길동        # 받는 사람 이름
+?lang=ko|en|zh   # 기본 언어 설정
+?theme=botanical # 테마 (classic, midnight, botanical)
+```
+
+예시: `https://example.com/?to=홍길동&lang=ko`
+
+## 기술 스택
+
+- **React 19** + **TypeScript**
+- **Vite** - 빌드 도구
+- **vanilla-extract** - CSS-in-TypeScript (zero-runtime)
+- **Firebase Realtime Database** - 축하하기 카운트 저장
+- **Yarn Berry (v4)** - 패키지 매니저
+
+## 시작하기
+
+```bash
+# 의존성 설치
+yarn install
+
+# 개발 서버 실행
+yarn dev
+
+# 타입 체크
+yarn typecheck
+
+# 프로덕션 빌드
+yarn build
+```
+
+## Firebase 설정
+
+1. [Firebase Console](https://console.firebase.google.com)에서 프로젝트 생성
+2. Realtime Database 활성화
+3. `.env` 파일 생성:
+
+```bash
+cp .env.example .env
+# Firebase Console에서 값 복사하여 입력
+```
+
+## 프로젝트 구조
+
+```
+src/
+├── main.tsx                    # 엔트리 포인트
+├── firebase.ts                 # Firebase 설정
+└── ui/
+    ├── App.tsx                 # 메인 컴포넌트
+    ├── i18n.ts                 # 다국어 시스템
+    ├── OurStory.tsx            # 커플 스토리 타임라인
+    ├── CelebrationButton.tsx   # 축하하기 버튼
+    ├── PhotoGallery.tsx        # 사진 캐러셀
+    ├── MapSection.tsx          # 오시는 길
+    ├── ShareActions.tsx        # 공유 버튼
+    ├── LanguagePicker.tsx      # 언어 선택 (floating)
+    ├── invitation/
+    │   ├── types.ts            # Invitation 타입 정의
+    │   └── defaultInvitation.ts # 샘플 데이터
+    └── theme/
+        ├── theme.css.ts        # 테마 변수 정의
+        └── global.css.ts       # 글로벌 스타일
+```
+
+## 커스터마이징
+
+### 청첩장 내용 수정
+
+`src/ui/invitation/defaultInvitation.ts` 파일에서 다음 정보를 수정:
+
+- 신랑/신부 이름
+- 처음 만난 날
+- 예식 일시/장소
+- 교통 정보
+- 사진
+
+### 테마 추가
+
+`src/ui/theme/theme.css.ts`에서 새 테마 클래스 생성
 
 ## 배포
 
-GitHub Pages로 배포됩니다. `main` 브랜치에 push하면 GitHub Actions가 자동으로 빌드 및 배포합니다.
+GitHub Pages로 자동 배포됩니다. `main` 브랜치에 push하면 GitHub Actions가 빌드 및 배포합니다.
 
-GitHub 저장소 Settings → Pages → Source에서 `GitHub Actions`를 선택해야 합니다.
+## 라이선스
+
+MIT

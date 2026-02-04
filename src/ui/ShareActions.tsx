@@ -17,15 +17,15 @@ export function ShareActions({
       <button
         className={actionButton}
         type="button"
-        onClick={() =>
+        onClick={() => {
           downloadIcs({
             title: invitation.meta.title[language],
             start: invitation.event.start,
             end: invitation.event.end,
             location: invitation.event.locationIcs,
             description: invitation.meta.description[language],
-          })
-        }
+          });
+        }}
       >
         {strings.addToCalendar}
       </button>

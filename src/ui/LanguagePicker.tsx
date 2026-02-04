@@ -1,5 +1,13 @@
+import { useState, useRef, useEffect } from "react";
 import type { Language } from "./i18n";
-import { picker, pickerButton, pickerButtonActive, pickerLabel } from "./LanguagePicker.css";
+import {
+  floatingContainer,
+  toggleButton,
+  dropdown,
+  dropdownItem,
+  dropdownItemActive,
+  flag,
+} from "./LanguagePicker.css";
 
 type Option = {
   value: Language;
@@ -20,25 +28,56 @@ export function LanguagePicker({
   value: Language;
   onChange: (next: Language) => void;
 }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const currentOption = OPTIONS.find((opt) => opt.value === value) ?? OPTIONS[0];
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className={picker} role="group" aria-label="Language">
-      {OPTIONS.map((opt) => {
-        const isActive = opt.value === value;
-        return (
-          <button
-            key={opt.value}
-            type="button"
-            className={`${pickerButton} ${isActive ? pickerButtonActive : ""}`}
-            onClick={() => onChange(opt.value)}
-            aria-pressed={isActive}
-            title={opt.label}
-          >
-            <span aria-hidden="true">{opt.flag}</span>
-            <span className={pickerLabel}>{opt.label}</span>
-          </button>
-        );
-      })}
+    <div className={floatingContainer} ref={containerRef}>
+      <button
+        type="button"
+        className={toggleButton}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Change language"
+        aria-expanded={isOpen}
+      >
+        <span>{currentOption.flag}</span>
+      </button>
+
+      {isOpen && (
+        <div className={dropdown} role="menu">
+          {OPTIONS.map((opt) => {
+            const isActive = opt.value === value;
+            return (
+              <button
+                key={opt.value}
+                type="button"
+                role="menuitem"
+                className={`${dropdownItem} ${isActive ? dropdownItemActive : ""}`}
+                onClick={() => {
+                  onChange(opt.value);
+                  setIsOpen(false);
+                }}
+              >
+                <span className={flag}>{opt.flag}</span>
+                <span>{opt.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
-

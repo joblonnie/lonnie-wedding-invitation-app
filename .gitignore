@@ -4,7 +4,8 @@ dist
 dist-ssr
 coverage
 .env
-.env.*
+.env.local
+.env.*.local
 
 # Yarn Berry (no zero-installs)
 .pnp.*
@@ -18,4 +19,3 @@ coverage
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
-

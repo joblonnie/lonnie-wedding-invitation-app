@@ -1,8 +1,19 @@
-import { classicThemeClass, midnightThemeClass } from "./theme.css";
+import {
+  classicThemeClass,
+  midnightThemeClass,
+  botanicalThemeClass,
+} from "./theme.css";
 
-export type ThemeName = "classic" | "midnight";
+export type ThemeName = "classic" | "midnight" | "botanical";
 
 export function themeClassFromName(theme: ThemeName) {
-  return theme === "midnight" ? midnightThemeClass : classicThemeClass;
+  switch (theme) {
+    case "midnight":
+      return midnightThemeClass;
+    case "botanical":
+      return botanicalThemeClass;
+    default:
+      return classicThemeClass;
+  }
 }
 

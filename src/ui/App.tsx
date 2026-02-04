@@ -90,7 +90,7 @@ export function App() {
   };
 
   if (mode === "bulk") {
-    return <BulkShare imageUrl={invitation.meta.imageUrl} onBack={handleBackFromBulk} />;
+    return <BulkShare onBack={handleBackFromBulk} />;
   }
 
   return (

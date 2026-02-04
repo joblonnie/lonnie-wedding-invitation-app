@@ -10,18 +10,15 @@ import {
   buttons,
   cancelButton,
   confirmButton,
-  kakaoButton,
 } from "./ShareModal.css";
-import { shareKakao } from "../kakao";
 
 type Props = {
   language: Language;
-  imageUrl: string;
   onClose: () => void;
   onShare: (name: string) => void;
 };
 
-export function ShareModal({ language, imageUrl, onClose, onShare }: Props) {
+export function ShareModal({ language, onClose, onShare }: Props) {
   const [name, setName] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const strings = t(language);
@@ -36,30 +33,14 @@ export function ShareModal({ language, imageUrl, onClose, onShare }: Props) {
     }
   };
 
-  const handleKakaoShare = () => {
-    const success = shareKakao({
-      title: strings.title,
-      description: strings.subtitle,
-      imageUrl,
-      recipientName: name.trim(),
-      language,
-    });
-
-    if (success) {
-      onClose();
-    } else {
-      // Fallback to regular share
-      onShare(name.trim());
-    }
-  };
-
-  const handleUrlShare = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     onShare(name.trim());
   };
 
   return (
     <div className={overlay} onClick={handleOverlayClick}>
-      <div className={modal}>
+      <form className={modal} onSubmit={handleSubmit}>
         <h2 className={title}>{strings.shareTitle}</h2>
 
         <div className={inputGroup}>
@@ -75,18 +56,14 @@ export function ShareModal({ language, imageUrl, onClose, onShare }: Props) {
         </div>
 
         <div className={buttons}>
-          <button type="button" className={kakaoButton} onClick={handleKakaoShare}>
-            {strings.kakaoShare}
+          <button type="button" className={cancelButton} onClick={onClose}>
+            {strings.cancel}
           </button>
-          <button type="button" className={confirmButton} onClick={handleUrlShare}>
-            {strings.copyLink}
+          <button type="submit" className={confirmButton}>
+            {strings.share}
           </button>
         </div>
-
-        <button type="button" className={cancelButton} onClick={onClose}>
-          {strings.cancel}
-        </button>
-      </div>
+      </form>
     </div>
   );
 }

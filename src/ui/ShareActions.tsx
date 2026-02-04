@@ -117,7 +117,6 @@ export function ShareActions({
       {showShareModal && (
         <ShareModal
           language={language}
-          imageUrl={invitation.meta.imageUrl}
           onClose={() => setShowShareModal(false)}
           onShare={handleShare}
         />

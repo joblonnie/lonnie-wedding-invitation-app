@@ -111,12 +111,12 @@ export const recipientItem = style({
   background: vars.color.surface,
   borderRadius: 10,
   marginBottom: 8,
+  gap: 12,
 });
 
 export const recipientInfo = style({
-  display: "flex",
-  alignItems: "center",
-  gap: 12,
+  flex: 1,
+  minWidth: 0,
 });
 
 export const recipientName = style({
@@ -125,12 +125,21 @@ export const recipientName = style({
 });
 
 export const recipientLang = style({
-  fontSize: 12,
-  padding: "4px 8px",
+  fontSize: 11,
+  padding: "3px 6px",
   background: vars.color.background,
   borderRadius: 4,
   color: vars.color.text,
   opacity: 0.7,
+});
+
+export const recipientUrl = style({
+  fontSize: 11,
+  color: vars.color.text,
+  opacity: 0.5,
+  marginTop: 6,
+  wordBreak: "break-all",
+  lineHeight: 1.4,
 });
 
 export const removeButton = style({
@@ -156,7 +165,80 @@ export const removeButton = style({
   },
 });
 
-export const sendAllButton = style({
+export const copyUrlButton = style({
+  padding: "6px 12px",
+  fontSize: 12,
+  fontWeight: 500,
+  background: vars.color.background,
+  color: vars.color.text,
+  border: `1px solid ${vars.color.border}`,
+  borderRadius: 6,
+  cursor: "pointer",
+  transition: "all 0.2s",
+  whiteSpace: "nowrap",
+  selectors: {
+    "&:hover": {
+      borderColor: vars.color.primary,
+      color: vars.color.primary,
+    },
+  },
+});
+
+export const actionButtons = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+});
+
+export const copyAllButton = style({
+  width: "100%",
+  padding: "16px",
+  fontSize: 16,
+  fontWeight: 600,
+  background: vars.color.primary,
+  color: "#fff",
+  border: "none",
+  borderRadius: 10,
+  cursor: "pointer",
+  transition: "all 0.2s",
+  selectors: {
+    "&:hover": {
+      opacity: 0.9,
+    },
+  },
+});
+
+export const copyAllButtonSuccess = style({
+  width: "100%",
+  padding: "16px",
+  fontSize: 16,
+  fontWeight: 600,
+  background: "#4CAF50",
+  color: "#fff",
+  border: "none",
+  borderRadius: 10,
+  cursor: "pointer",
+});
+
+export const kakaoLoginButton = style({
+  width: "100%",
+  padding: "16px",
+  fontSize: 16,
+  fontWeight: 600,
+  background: "#FEE500",
+  color: "#000",
+  border: "none",
+  borderRadius: 10,
+  cursor: "pointer",
+  transition: "opacity 0.2s",
+  selectors: {
+    "&:hover": {
+      opacity: 0.9,
+    },
+  },
+});
+
+export const sendToMeButton = style({
   width: "100%",
   padding: "16px",
   fontSize: 16,
@@ -184,25 +266,5 @@ export const emptyState = style({
   color: vars.color.text,
   opacity: 0.5,
   fontSize: 14,
-  lineHeight: 1.8,
-});
-
-export const sendingOverlay = style({
-  position: "fixed",
-  inset: 0,
-  background: "rgba(0,0,0,0.7)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 3000,
-});
-
-export const sendingText = style({
-  background: vars.color.surface,
-  padding: "32px 40px",
-  borderRadius: 16,
-  textAlign: "center",
-  fontSize: 16,
-  fontWeight: 500,
   lineHeight: 1.8,
 });

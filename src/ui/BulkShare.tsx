@@ -1,6 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { Language } from "./i18n";
-import { shareKakao } from "../kakao";
 import {
   bulkShareContainer,
   headerRow,
@@ -11,16 +10,21 @@ import {
   recipientInfo,
   recipientName,
   recipientLang,
+  recipientUrl,
   removeButton,
   addForm,
   nameInput,
   langSelect,
   addButton,
-  sendAllButton,
+  actionButtons,
+  copyAllButton,
+  copyAllButtonSuccess,
+  kakaoLoginButton,
+  sendToMeButton,
   emptyState,
-  sendingOverlay,
-  sendingText,
+  copyUrlButton,
 } from "./BulkShare.css";
+import { initKakao, loginWithKakao, sendToMe, isKakaoLoggedIn } from "../kakao";
 
 type Recipient = {
   id: string;
@@ -35,19 +39,38 @@ const LANGUAGE_LABELS: Record<Language, string> = {
 };
 
 type Props = {
-  imageUrl: string;
   onBack: () => void;
 };
 
-export function BulkShare({ imageUrl, onBack }: Props) {
+function buildShareUrl(name: string, language: Language): string {
+  const url = new URL(window.location.origin + window.location.pathname);
+  url.searchParams.delete("mode");
+  if (name) url.searchParams.set("to", name);
+  if (language) url.searchParams.set("lang", language);
+  return url.toString();
+}
+
+export function BulkShare({ onBack }: Props) {
   const [recipients, setRecipients] = useState<Recipient[]>(() => {
     const saved = localStorage.getItem("bulkShareRecipients");
     return saved ? JSON.parse(saved) : [];
   });
   const [newName, setNewName] = useState("");
   const [newLang, setNewLang] = useState<Language>("ko");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedAll, setCopiedAll] = useState(false);
+  const [kakaoReady, setKakaoReady] = useState(false);
+  const [kakaoLoggedIn, setKakaoLoggedIn] = useState(false);
   const [sending, setSending] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [sendSuccess, setSendSuccess] = useState(false);
+
+  useEffect(() => {
+    const ready = initKakao();
+    setKakaoReady(ready);
+    if (ready) {
+      setKakaoLoggedIn(isKakaoLoggedIn());
+    }
+  }, []);
 
   const saveRecipients = useCallback((list: Recipient[]) => {
     localStorage.setItem("bulkShareRecipients", JSON.stringify(list));
@@ -71,42 +94,51 @@ export function BulkShare({ imageUrl, onBack }: Props) {
     saveRecipients(recipients.filter((r) => r.id !== id));
   };
 
-  const handleSendAll = async () => {
+  const handleCopyUrl = async (recipient: Recipient) => {
+    const url = buildShareUrl(recipient.name, recipient.language);
+    await navigator.clipboard.writeText(url);
+    setCopiedId(recipient.id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleCopyAll = async () => {
+    const text = recipients
+      .map((r) => {
+        const url = buildShareUrl(r.name, r.language);
+        return `${r.name}님 청첩장\n${url}`;
+      })
+      .join("\n\n");
+
+    await navigator.clipboard.writeText(text);
+    setCopiedAll(true);
+    setTimeout(() => setCopiedAll(false), 2000);
+  };
+
+  const handleKakaoLogin = () => {
+    loginWithKakao();
+  };
+
+  const handleSendToMe = async () => {
     if (recipients.length === 0) return;
 
     setSending(true);
-    setCurrentIndex(0);
+    const text = recipients
+      .map((r) => {
+        const url = buildShareUrl(r.name, r.language);
+        return `📩 ${r.name}님 청첩장\n${url}`;
+      })
+      .join("\n\n");
 
-    for (let i = 0; i < recipients.length; i++) {
-      setCurrentIndex(i);
-      const recipient = recipients[i];
-
-      shareKakao({
-        title: "청첩장",
-        description: "소중한 분들을 초대합니다.",
-        imageUrl,
-        recipientName: recipient.name,
-        language: recipient.language,
-      });
-
-      // Wait for user to complete the share action
-      if (i < recipients.length - 1) {
-        await new Promise<void>((resolve) => {
-          const handleFocus = () => {
-            window.removeEventListener("focus", handleFocus);
-            setTimeout(resolve, 500);
-          };
-          window.addEventListener("focus", handleFocus);
-          // Fallback timeout
-          setTimeout(() => {
-            window.removeEventListener("focus", handleFocus);
-            resolve();
-          }, 10000);
-        });
-      }
-    }
-
+    const success = await sendToMe(text);
     setSending(false);
+
+    if (success) {
+      setSendSuccess(true);
+      setTimeout(() => setSendSuccess(false), 3000);
+    } else {
+      alert("메시지 전송에 실패했습니다. 다시 로그인해주세요.");
+      setKakaoLoggedIn(false);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -160,43 +192,81 @@ export function BulkShare({ imageUrl, onBack }: Props) {
             {recipients.map((recipient) => (
               <li key={recipient.id} className={recipientItem}>
                 <div className={recipientInfo}>
-                  <span className={recipientName}>{recipient.name}</span>
-                  <span className={recipientLang}>
-                    {LANGUAGE_LABELS[recipient.language]}
-                  </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span className={recipientName}>{recipient.name}</span>
+                    <span className={recipientLang}>
+                      {LANGUAGE_LABELS[recipient.language]}
+                    </span>
+                  </div>
+                  <div className={recipientUrl}>
+                    {buildShareUrl(recipient.name, recipient.language)}
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  className={removeButton}
-                  onClick={() => handleRemove(recipient.id)}
-                >
-                  ✕
-                </button>
+                <div style={{ display: "flex", gap: 6, alignItems: "center", flexShrink: 0 }}>
+                  <button
+                    type="button"
+                    className={copyUrlButton}
+                    onClick={() => handleCopyUrl(recipient)}
+                  >
+                    {copiedId === recipient.id ? "✓ 복사됨" : "복사"}
+                  </button>
+                  <button
+                    type="button"
+                    className={removeButton}
+                    onClick={() => handleRemove(recipient.id)}
+                  >
+                    ✕
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
 
-          <button
-            type="button"
-            className={sendAllButton}
-            onClick={handleSendAll}
-            disabled={sending}
-          >
-            {sending
-              ? `전송 중... (${currentIndex + 1}/${recipients.length})`
-              : `카카오톡으로 전송 (${recipients.length}명)`}
-          </button>
-        </>
-      )}
+          <div className={actionButtons}>
+            {kakaoReady && !kakaoLoggedIn && (
+              <button
+                type="button"
+                className={kakaoLoginButton}
+                onClick={handleKakaoLogin}
+              >
+                카카오 로그인
+              </button>
+            )}
 
-      {sending && (
-        <div className={sendingOverlay}>
-          <div className={sendingText}>
-            {recipients[currentIndex]?.name}님께 전송 중...
-            <br />
-            <small>카카오톡에서 전송을 완료해주세요</small>
+            {kakaoReady && kakaoLoggedIn && (
+              <button
+                type="button"
+                className={sendToMeButton}
+                onClick={handleSendToMe}
+                disabled={sending}
+              >
+                {sending
+                  ? "전송 중..."
+                  : sendSuccess
+                  ? "✓ 전송 완료!"
+                  : `나에게 보내기 (${recipients.length}명)`}
+              </button>
+            )}
+
+            <button
+              type="button"
+              className={copiedAll ? copyAllButtonSuccess : copyAllButton}
+              onClick={handleCopyAll}
+            >
+              {copiedAll ? "✓ 전체 복사됨!" : `전체 URL 복사 (${recipients.length}명)`}
+            </button>
           </div>
-        </div>
+
+          {kakaoLoggedIn ? (
+            <p style={{ fontSize: 13, opacity: 0.6, textAlign: "center", marginTop: 16 }}>
+              "나에게 보내기"로 카카오톡에서 URL을 받아 전달하세요
+            </p>
+          ) : (
+            <p style={{ fontSize: 13, opacity: 0.6, textAlign: "center", marginTop: 16 }}>
+              카카오 로그인하면 나에게 보내기 가능
+            </p>
+          )}
+        </>
       )}
     </div>
   );

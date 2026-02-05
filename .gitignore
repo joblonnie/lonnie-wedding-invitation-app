@@ -19,3 +19,7 @@ coverage
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+
+# Next.js
+.next/
+next-env.d.ts

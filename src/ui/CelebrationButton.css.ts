@@ -49,7 +49,7 @@ export const heartEmpty = style({
 });
 
 export const heartFilled = style({
-  color: "#ff4d6d",
+  color: vars.color.celebration,
 });
 
 export const miniHearts = style({
@@ -63,7 +63,7 @@ export const miniHearts = style({
 export const miniHeart = style({
   position: "absolute",
   fontSize: 12,
-  color: "#ff4d6d",
+  color: vars.color.celebration,
   opacity: 0.7,
 });
 
@@ -93,5 +93,5 @@ export const floatingHeart = style({
   bottom: 0,
   fontSize: 20,
   animation: `${floatUp} 0.8s ease-out forwards`,
-  color: "#ff4d6d",
+  color: vars.color.celebration,
 });

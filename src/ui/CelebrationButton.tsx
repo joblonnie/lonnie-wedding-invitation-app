@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
+import confetti from "canvas-confetti";
 import {
   container,
   heartButton,
@@ -17,6 +18,10 @@ import {
   subscribeToUserLiked,
   incrementCelebration,
 } from "../firebase";
+import { THEME_CONFETTI_COLORS } from "./theme/theme";
+import type { ThemeName } from "./theme/theme";
+
+type Props = { themeName?: ThemeName };
 
 type FloatingHeart = {
   id: number;
@@ -33,7 +38,7 @@ const MINI_HEART_POSITIONS = [
   { x: 10, y: 22, size: 8, delay: 0.12 },
 ];
 
-export function CelebrationButton() {
+export function CelebrationButton({ themeName = "botanical" }: Props) {
   const [isReady, setIsReady] = useState(false);
   const [liked, setLiked] = useState(false);
   const [count, setCount] = useState(0);
@@ -84,9 +89,26 @@ export function CelebrationButton() {
       setHearts((prev) => prev.filter((h) => !newHearts.some((nh) => nh.id === h.id)));
     }, 800);
 
+    // Confetti 축포 효과
+    const colors = THEME_CONFETTI_COLORS[themeName ?? "botanical"];
+    confetti({
+      particleCount: 60,
+      spread: 70,
+      origin: { y: 0.7 },
+      colors,
+    });
+    setTimeout(() => {
+      confetti({
+        particleCount: 40,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors,
+      });
+    }, 250);
+
     // Firebase에 저장
     await incrementCelebration();
-  }, []);
+  }, [themeName]);
 
   const showMiniHearts = count >= 2;
 

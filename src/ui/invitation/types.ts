@@ -1,6 +1,12 @@
 import type { SocialMeta } from "../meta/setSocialMeta";
 import type { ThemeName } from "../theme/theme";
 
+export type BankAccount = {
+  bank: string;
+  accountNumber: string;
+  holder: string;
+};
+
 export type Invitation = {
   theme: ThemeName;
   meta: SocialMeta;
@@ -14,6 +20,10 @@ export type Invitation = {
     src: string;
     alt: { ko: string; en: string; zh: string };
   }>;
+  accounts?: {
+    groom: BankAccount[];
+    bride: BankAccount[];
+  };
   event: {
     start: Date;
     end: Date;

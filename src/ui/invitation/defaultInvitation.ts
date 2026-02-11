@@ -67,6 +67,16 @@ export const DEFAULT_INVITATION: Invitation = {
       },
     },
   ],
+  accounts: {
+    groom: [
+      { bank: "신한은행", accountNumber: "110-123-456789", holder: "김동현" },
+      { bank: "국민은행", accountNumber: "123-45-6789012", holder: "김철수 (부)" },
+    ],
+    bride: [
+      { bank: "우리은행", accountNumber: "1002-123-456789", holder: "정수진" },
+      { bank: "하나은행", accountNumber: "456-78-9012345", holder: "정영희 (모)" },
+    ],
+  },
   event: {
     start: new Date("2026-10-17T05:00:00.000Z"),
     end: new Date("2026-10-17T07:00:00.000Z"),

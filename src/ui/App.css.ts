@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { vars } from "./theme/theme.css";
-import { fadeIn } from "./theme/global.css";
+import { scrollReveal } from "./theme/global.css";
 
 export const appContainer = style({
   minHeight: "100vh",
@@ -20,7 +20,6 @@ export const headerRow = style({
   textAlign: "center",
   gap: 16,
   marginBottom: 48,
-  animation: `${fadeIn} 0.8s ease-out`,
 });
 
 export const headerTitle = style({
@@ -35,14 +34,13 @@ export const headerTitle = style({
 export const greeting = style({
   fontSize: 14,
   fontWeight: 400,
-  color: vars.color.text,
-  opacity: 0.6,
+  color: vars.color.textMuted,
   margin: "0 0 8px",
 });
 
 export const headerSubtitle = style({
   fontSize: 14,
-  opacity: 0.5,
+  color: vars.color.textMuted,
   margin: 0,
   fontWeight: 400,
 });
@@ -56,8 +54,6 @@ export const row = style({
 
 export const section = style({
   marginTop: 56,
-  animation: `${fadeIn} 0.8s ease-out`,
-  animationFillMode: "both",
 });
 
 export const sectionTitle = style({
@@ -76,4 +72,13 @@ export const divider = style({
   height: 1,
   background: vars.color.border,
   margin: "48px auto",
+});
+
+export const scrollRevealHidden = style({
+  opacity: 0,
+  transform: "translateY(30px)",
+});
+
+export const scrollRevealVisible = style({
+  animation: `${scrollReveal} 0.7s ease-out forwards`,
 });

@@ -30,10 +30,12 @@ export function ShareActions({
   invitation,
   language,
   onBulkShare,
+  onAccountInfo,
 }: {
   invitation: Invitation;
   language: Language;
   onBulkShare?: () => void;
+  onAccountInfo?: () => void;
 }) {
   const strings = t(language);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -103,6 +105,16 @@ export function ShareActions({
           {strings.share}
         </button>
 
+        {onAccountInfo && (
+          <button
+            className={actionButton}
+            type="button"
+            onClick={onAccountInfo}
+          >
+            {strings.accountInfo}
+          </button>
+        )}
+
         {onBulkShare && (
           <button
             className={actionButton}
@@ -124,4 +136,3 @@ export function ShareActions({
     </>
   );
 }
-

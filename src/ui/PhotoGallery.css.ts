@@ -5,17 +5,19 @@ export const carouselContainer = style({
   position: "relative",
   width: "100%",
   overflow: "hidden",
+  userSelect: "none",
+  WebkitUserSelect: "none",
 });
 
 export const carouselTrack = style({
   display: "flex",
-  transition: "transform 0.4s ease",
 });
 
 export const carouselSlide = style({
   minWidth: "100%",
   padding: "0 4px",
   boxSizing: "border-box",
+  cursor: "pointer",
 });
 
 export const image = style({
@@ -24,6 +26,7 @@ export const image = style({
   objectFit: "cover",
   borderRadius: 8,
   background: vars.color.background,
+  pointerEvents: "none",
 });
 
 export const carouselNav = style({

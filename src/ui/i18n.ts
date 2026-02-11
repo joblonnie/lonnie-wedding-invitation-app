@@ -36,6 +36,29 @@ type Strings = {
   kakaoShare: string;
   copyLink: string;
   bulkShare: string;
+  // 축의금
+  accountInfo: string;
+  groomSide: string;
+  brideSide: string;
+  copyAccount: string;
+  copiedAccount: string;
+  accountHolder: string;
+  // 방명록
+  guestBook: string;
+  guestName: string;
+  guestNamePlaceholder: string;
+  guestMessage: string;
+  guestMessagePlaceholder: string;
+  guestPassword: string;
+  guestPasswordPlaceholder: string;
+  guestSubmit: string;
+  guestDelete: string;
+  guestDeleteConfirm: string;
+  guestPasswordWrong: string;
+  guestLoadMore: string;
+  guestEmpty: string;
+  guestPasswordForDelete: string;
+  tapToOpen: string;
 };
 
 const DICT: Record<Language, Strings> = {
@@ -75,6 +98,29 @@ const DICT: Record<Language, Strings> = {
     kakaoShare: "카카오톡",
     copyLink: "링크 복사",
     bulkShare: "단체 전송",
+    // 축의금
+    accountInfo: "축의금 안내",
+    groomSide: "신랑측",
+    brideSide: "신부측",
+    copyAccount: "복사",
+    copiedAccount: "복사 완료",
+    accountHolder: "예금주",
+    // 방명록
+    guestBook: "방명록",
+    guestName: "이름",
+    guestNamePlaceholder: "이름을 입력해주세요",
+    guestMessage: "메시지",
+    guestMessagePlaceholder: "축하 메시지를 남겨주세요",
+    guestPassword: "비밀번호",
+    guestPasswordPlaceholder: "삭제 시 필요합니다",
+    guestSubmit: "등록",
+    guestDelete: "삭제",
+    guestDeleteConfirm: "이 메시지를 삭제하시겠습니까?",
+    guestPasswordWrong: "비밀번호가 올바르지 않습니다.",
+    guestLoadMore: "더보기",
+    guestEmpty: "첫 번째 축하 메시지를 남겨주세요!",
+    guestPasswordForDelete: "비밀번호를 입력해주세요",
+    tapToOpen: "터치하여 열기",
   },
   en: {
     title: "Wedding Invitation",
@@ -112,6 +158,29 @@ const DICT: Record<Language, Strings> = {
     kakaoShare: "KakaoTalk",
     copyLink: "Copy Link",
     bulkShare: "Bulk Send",
+    // Account info
+    accountInfo: "Account Info",
+    groomSide: "Groom's Side",
+    brideSide: "Bride's Side",
+    copyAccount: "Copy",
+    copiedAccount: "Copied",
+    accountHolder: "Account Holder",
+    // Guest book
+    guestBook: "Guest Book",
+    guestName: "Name",
+    guestNamePlaceholder: "Enter your name",
+    guestMessage: "Message",
+    guestMessagePlaceholder: "Leave a congratulatory message",
+    guestPassword: "Password",
+    guestPasswordPlaceholder: "Required for deletion",
+    guestSubmit: "Submit",
+    guestDelete: "Delete",
+    guestDeleteConfirm: "Delete this message?",
+    guestPasswordWrong: "Incorrect password.",
+    guestLoadMore: "Load More",
+    guestEmpty: "Be the first to leave a message!",
+    guestPasswordForDelete: "Enter password",
+    tapToOpen: "Tap to open",
   },
   zh: {
     title: "婚礼请柬",
@@ -149,6 +218,29 @@ const DICT: Record<Language, Strings> = {
     kakaoShare: "KakaoTalk",
     copyLink: "复制链接",
     bulkShare: "批量发送",
+    // 账户信息
+    accountInfo: "转账信息",
+    groomSide: "新郎方",
+    brideSide: "新娘方",
+    copyAccount: "复制",
+    copiedAccount: "已复制",
+    accountHolder: "户名",
+    // 留言板
+    guestBook: "留言板",
+    guestName: "姓名",
+    guestNamePlaceholder: "请输入姓名",
+    guestMessage: "留言",
+    guestMessagePlaceholder: "留下祝福的话",
+    guestPassword: "密码",
+    guestPasswordPlaceholder: "删除时需要",
+    guestSubmit: "提交",
+    guestDelete: "删除",
+    guestDeleteConfirm: "确定删除这条留言吗？",
+    guestPasswordWrong: "密码不正确。",
+    guestLoadMore: "加载更多",
+    guestEmpty: "成为第一个留言的人吧！",
+    guestPasswordForDelete: "请输入密码",
+    tapToOpen: "点击打开",
   },
 };
 

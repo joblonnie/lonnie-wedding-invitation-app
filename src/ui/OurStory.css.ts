@@ -26,15 +26,13 @@ export const coupleNames = style({
 });
 
 export const heart = style({
-  color: vars.color.primary,
+  color: vars.color.primaryLight,
   fontSize: 14,
-  opacity: 0.6,
 });
 
 export const storyText = style({
   textAlign: "center",
-  color: vars.color.text,
-  opacity: 0.6,
+  color: vars.color.textMuted,
   fontSize: 14,
   lineHeight: 1.8,
   maxWidth: 320,
@@ -69,14 +67,12 @@ export const timelineLabel = style({
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: "0.15em",
-  color: vars.color.text,
-  opacity: 0.4,
+  color: vars.color.textMuted,
 });
 
 export const timelineValue = style({
   fontSize: 13,
   color: vars.color.text,
-  opacity: 0.8,
 });
 
 export const daysCount = style({

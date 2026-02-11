@@ -11,8 +11,7 @@ globalStyle("html, body", {
 
 globalStyle("body", {
   margin: 0,
-  fontFamily:
-    '"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", sans-serif',
+  fontFamily: vars.font.body,
   background: vars.color.background,
   color: vars.color.text,
   lineHeight: 1.6,
@@ -26,6 +25,7 @@ globalStyle("button, select", {
 });
 
 globalStyle("h1, h2, h3", {
+  fontFamily: vars.font.heading,
   fontWeight: 300,
   letterSpacing: "-0.02em",
 });
@@ -44,3 +44,22 @@ export const fadeIn = keyframes({
   to: { opacity: 1, transform: "translateY(0)" },
 });
 
+export const scrollReveal = keyframes({
+  from: { opacity: 0, transform: "translateY(30px)" },
+  to: { opacity: 1, transform: "translateY(0)" },
+});
+
+export const envelopeSlideUp = keyframes({
+  from: { opacity: 0, transform: "translateY(40px) scale(0.95)" },
+  to: { opacity: 1, transform: "translateY(0) scale(1)" },
+});
+
+export const petalFall = keyframes({
+  "0%": { opacity: 1, transform: "translateY(-10%) rotate(0deg)" },
+  "100%": { opacity: 0, transform: "translateY(110vh) rotate(720deg)" },
+});
+
+export const gentleSway = keyframes({
+  "0%, 100%": { transform: "rotate(-3deg)" },
+  "50%": { transform: "rotate(3deg)" },
+});

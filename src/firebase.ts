@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, runTransaction, onValue, set, get } from "firebase/database";
+import { getDatabase, ref, runTransaction, onValue, set, get, push, remove, query, orderByChild } from "firebase/database";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
 
 // Firebase 설정 - 환경변수 또는 직접 입력
@@ -90,4 +90,65 @@ export async function decrementCelebration() {
   await runTransaction(celebrationCountRef, (currentCount) => {
     return Math.max(0, (currentCount ?? 0) - 1);
   });
+}
+
+// === 방명록 ===
+
+export type GuestMessage = {
+  id: string;
+  name: string;
+  message: string;
+  passwordHash: number;
+  timestamp: number;
+};
+
+function simpleHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash + char) | 0;
+  }
+  return hash;
+}
+
+const guestbookRef = ref(database, "guestbook/messages");
+
+export async function addGuestMessage(name: string, message: string, password: string) {
+  const newRef = push(guestbookRef);
+  await set(newRef, {
+    name,
+    message,
+    passwordHash: simpleHash(password),
+    timestamp: Date.now(),
+  });
+}
+
+export function subscribeToGuestMessages(callback: (messages: GuestMessage[]) => void) {
+  const q = query(guestbookRef, orderByChild("timestamp"));
+  return onValue(q, (snapshot) => {
+    const messages: GuestMessage[] = [];
+    snapshot.forEach((child) => {
+      messages.push({
+        id: child.key!,
+        ...child.val(),
+      });
+    });
+    // 최신 순 정렬
+    messages.reverse();
+    callback(messages);
+  });
+}
+
+export async function deleteGuestMessage(id: string, password: string): Promise<boolean> {
+  const msgRef = ref(database, `guestbook/messages/${id}`);
+  const snapshot = await get(msgRef);
+  const data = snapshot.val();
+  if (!data) return false;
+
+  if (data.passwordHash !== simpleHash(password)) {
+    return false;
+  }
+
+  await remove(msgRef);
+  return true;
 }

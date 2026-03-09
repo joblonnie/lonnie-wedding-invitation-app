@@ -6,7 +6,7 @@ import {
   subscribeToGuestMessages,
   deleteGuestMessage,
   type GuestMessage,
-} from "../firebase";
+} from "../api";
 import {
   container,
   form,

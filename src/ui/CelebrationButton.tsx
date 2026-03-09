@@ -14,10 +14,9 @@ import {
 } from "./CelebrationButton.css";
 import {
   initAuth,
-  subscribeToCelebrationCount,
-  subscribeToUserLiked,
+  subscribeToCelebration,
   incrementCelebration,
-} from "../firebase";
+} from "../api";
 import { THEME_CONFETTI_COLORS } from "./theme/theme";
 import type { ThemeName } from "./theme/theme";
 
@@ -45,27 +44,18 @@ export function CelebrationButton({ themeName = "botanical" }: Props) {
   const [hearts, setHearts] = useState<FloatingHeart[]>([]);
   const [animating, setAnimating] = useState(false);
 
-  // Firebase 인증 초기화
+  // 인증 초기화 + 축하 데이터 구독
   useEffect(() => {
     initAuth()
       .then(() => setIsReady(true))
       .catch(console.error);
   }, []);
 
-  // Firebase에서 실시간 카운트 구독
-  useEffect(() => {
-    const unsubscribe = subscribeToCelebrationCount((newCount) => {
-      setCount(newCount);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // Firebase에서 사용자 좋아요 여부 구독
   useEffect(() => {
     if (!isReady) return;
 
-    const unsubscribe = subscribeToUserLiked((userLiked) => {
+    const unsubscribe = subscribeToCelebration(({ count: newCount, liked: userLiked }) => {
+      setCount(newCount);
       setLiked(userLiked);
     });
 

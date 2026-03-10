@@ -16,6 +16,7 @@ export const vars = createThemeContract({
   },
   font: {
     heading: null,
+    handwriting: null,
     body: null,
   },
   radius: {
@@ -41,7 +42,8 @@ export const classicThemeClass = createTheme(vars, {
   },
   font: {
     heading: '"Cormorant Garamond", "Pretendard Variable", serif',
-    body: '"Pretendard Variable", Pretendard, "Noto Sans SC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    handwriting: '"Gaegu", "Pretendard Variable", cursive',
+    body: '"Gowun Dodum", "Pretendard Variable", Pretendard, "Noto Sans SC", sans-serif',
   },
   radius: {
     sm: "8px",
@@ -66,7 +68,8 @@ export const midnightThemeClass = createTheme(vars, {
   },
   font: {
     heading: '"Cormorant Garamond", "Pretendard Variable", serif',
-    body: '"Pretendard Variable", Pretendard, "Noto Sans SC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    handwriting: '"Gaegu", "Pretendard Variable", cursive',
+    body: '"Gowun Dodum", "Pretendard Variable", Pretendard, "Noto Sans SC", sans-serif',
   },
   radius: {
     sm: "8px",
@@ -91,7 +94,8 @@ export const botanicalThemeClass = createTheme(vars, {
   },
   font: {
     heading: '"Cormorant Garamond", "Pretendard Variable", serif',
-    body: '"Pretendard Variable", Pretendard, "Noto Sans SC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+    handwriting: '"Gaegu", "Pretendard Variable", cursive',
+    body: '"Gowun Dodum", "Pretendard Variable", Pretendard, "Noto Sans SC", sans-serif',
   },
   radius: {
     sm: "8px",

@@ -59,6 +59,13 @@ type Strings = {
   guestEmpty: string;
   guestPasswordForDelete: string;
   tapToOpen: string;
+  // 네비게이션
+  navStory: string;
+  navEvent: string;
+  navGallery: string;
+  navMap: string;
+  navGuestBook: string;
+  navBack: string;
 };
 
 const DICT: Record<Language, Strings> = {
@@ -121,6 +128,12 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "첫 번째 축하 메시지를 남겨주세요!",
     guestPasswordForDelete: "비밀번호를 입력해주세요",
     tapToOpen: "터치하여 열기",
+    navStory: "우리 이야기",
+    navEvent: "예식 안내",
+    navGallery: "갤러리",
+    navMap: "오시는 길",
+    navGuestBook: "방명록",
+    navBack: "돌아가기",
   },
   en: {
     title: "Wedding Invitation",
@@ -181,6 +194,12 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "Be the first to leave a message!",
     guestPasswordForDelete: "Enter password",
     tapToOpen: "Tap to open",
+    navStory: "Our Story",
+    navEvent: "Ceremony",
+    navGallery: "Gallery",
+    navMap: "Directions",
+    navGuestBook: "Guest Book",
+    navBack: "Back",
   },
   zh: {
     title: "婚礼请柬",
@@ -241,6 +260,12 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "成为第一个留言的人吧！",
     guestPasswordForDelete: "请输入密码",
     tapToOpen: "点击打开",
+    navStory: "我们的故事",
+    navEvent: "婚礼信息",
+    navGallery: "相册",
+    navMap: "交通指南",
+    navGuestBook: "留言板",
+    navBack: "返回",
   },
 };
 

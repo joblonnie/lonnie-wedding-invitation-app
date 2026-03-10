@@ -13,13 +13,14 @@ export const coupleNames = style({
   alignItems: "center",
   justifyContent: "center",
   gap: 24,
-  fontSize: 32,
-  fontWeight: 200,
-  letterSpacing: "-0.02em",
+  fontFamily: vars.font.handwriting,
+  fontSize: 34,
+  fontWeight: 400,
+  letterSpacing: "0.02em",
   color: vars.color.text,
   "@media": {
     "(min-width: 480px)": {
-      fontSize: 40,
+      fontSize: 42,
       gap: 32,
     },
   },
@@ -32,8 +33,9 @@ export const heart = style({
 
 export const storyText = style({
   textAlign: "center",
+  fontFamily: vars.font.handwriting,
   color: vars.color.textMuted,
-  fontSize: 14,
+  fontSize: 17,
   lineHeight: 1.8,
   maxWidth: 320,
   margin: 0,

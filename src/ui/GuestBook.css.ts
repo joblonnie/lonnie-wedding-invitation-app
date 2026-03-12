@@ -1,10 +1,15 @@
-import { style } from "@vanilla-extract/css";
+import { style, keyframes } from "@vanilla-extract/css";
 import { vars } from "./theme/theme.css";
+
+const fadeUp = keyframes({
+  from: { opacity: 0, transform: "translateY(12px)" },
+  to: { opacity: 1, transform: "translateY(0)" },
+});
 
 export const container = style({
   display: "flex",
   flexDirection: "column",
-  gap: 20,
+  gap: 24,
 });
 
 export const form = style({
@@ -13,7 +18,8 @@ export const form = style({
   gap: 12,
   padding: 20,
   border: `1px solid ${vars.color.border}`,
-  borderRadius: 12,
+  borderRadius: vars.radius.md,
+  animation: `${fadeUp} 0.5s ease-out backwards`,
 });
 
 export const inputRow = style({
@@ -25,9 +31,10 @@ export const inputField = style({
   flex: 1,
   padding: "10px 14px",
   fontSize: 14,
+  fontFamily: vars.font.handwriting,
   border: `1px solid ${vars.color.border}`,
-  borderRadius: 8,
-  background: vars.color.background,
+  borderRadius: vars.radius.sm,
+  background: "transparent",
   color: vars.color.text,
   outline: "none",
   transition: "border-color 0.2s ease",
@@ -37,7 +44,7 @@ export const inputField = style({
     },
     "&::placeholder": {
       color: vars.color.text,
-      opacity: 0.4,
+      opacity: 0.35,
     },
   },
 });
@@ -46,14 +53,14 @@ export const textareaField = style({
   width: "100%",
   padding: "10px 14px",
   fontSize: 14,
+  fontFamily: vars.font.handwriting,
   border: `1px solid ${vars.color.border}`,
-  borderRadius: 8,
-  background: vars.color.background,
+  borderRadius: vars.radius.sm,
+  background: "transparent",
   color: vars.color.text,
   outline: "none",
   resize: "vertical",
   minHeight: 80,
-  fontFamily: "inherit",
   transition: "border-color 0.2s ease",
   selectors: {
     "&:focus": {
@@ -61,29 +68,30 @@ export const textareaField = style({
     },
     "&::placeholder": {
       color: vars.color.text,
-      opacity: 0.4,
+      opacity: 0.35,
     },
   },
 });
 
 export const submitButton = style({
   appearance: "none",
-  border: "none",
-  background: vars.color.primary,
-  color: "#fff",
-  padding: "12px 24px",
-  borderRadius: 8,
+  border: `1.5px solid ${vars.color.primary}`,
+  background: "transparent",
+  color: vars.color.primary,
+  padding: "11px 24px",
+  borderRadius: 999,
   cursor: "pointer",
   fontSize: 14,
-  fontWeight: 500,
+  fontFamily: vars.font.handwriting,
+  fontWeight: 700,
   alignSelf: "flex-end",
-  transition: "opacity 0.2s ease",
+  transition: "all 0.2s ease",
+  ":active": {
+    transform: "scale(0.97)",
+  },
   selectors: {
-    "&:hover": {
-      opacity: 0.85,
-    },
     "&:disabled": {
-      opacity: 0.5,
+      opacity: 0.4,
       cursor: "not-allowed",
     },
   },
@@ -96,9 +104,10 @@ export const messageList = style({
 });
 
 export const messageCard = style({
-  padding: 16,
+  padding: "16px 18px",
   border: `1px solid ${vars.color.border}`,
-  borderRadius: 12,
+  borderRadius: vars.radius.md,
+  animation: `${fadeUp} 0.4s ease-out backwards`,
 });
 
 export const messageHeader = style({
@@ -109,8 +118,10 @@ export const messageHeader = style({
 });
 
 export const messageName = style({
-  fontSize: 14,
-  fontWeight: 500,
+  fontSize: 15,
+  fontFamily: vars.font.handwriting,
+  fontWeight: 700,
+  color: vars.color.text,
 });
 
 export const messageTime = style({
@@ -119,28 +130,28 @@ export const messageTime = style({
 });
 
 export const messageText = style({
-  fontSize: 14,
-  lineHeight: 1.6,
-  opacity: 0.8,
+  fontSize: 15,
+  fontFamily: vars.font.handwriting,
+  lineHeight: 1.7,
+  color: vars.color.text,
+  opacity: 0.85,
   whiteSpace: "pre-wrap",
   wordBreak: "break-word",
+  margin: 0,
 });
 
 export const deleteButton = style({
   appearance: "none",
   border: "none",
   background: "transparent",
-  color: vars.color.text,
-  opacity: 0.3,
+  color: vars.color.textMuted,
   cursor: "pointer",
   fontSize: 12,
   padding: "4px 8px",
   borderRadius: 4,
-  transition: "opacity 0.2s ease",
-  selectors: {
-    "&:hover": {
-      opacity: 0.6,
-    },
+  transition: "color 0.2s ease",
+  ":active": {
+    color: vars.color.text,
   },
 });
 
@@ -149,24 +160,24 @@ export const loadMoreButton = style({
   border: `1px solid ${vars.color.border}`,
   background: "transparent",
   color: vars.color.text,
-  padding: "10px 20px",
+  padding: "10px 24px",
   borderRadius: 999,
   cursor: "pointer",
-  fontSize: 13,
-  fontWeight: 500,
+  fontSize: 14,
+  fontFamily: vars.font.handwriting,
+  fontWeight: 400,
   alignSelf: "center",
   transition: "all 0.2s ease",
-  selectors: {
-    "&:hover": {
-      borderColor: vars.color.primary,
-      color: vars.color.primary,
-    },
+  ":active": {
+    borderColor: vars.color.primary,
+    color: vars.color.primary,
   },
 });
 
 export const emptyMessage = style({
   textAlign: "center",
-  fontSize: 14,
+  fontFamily: vars.font.handwriting,
+  fontSize: 16,
   color: vars.color.textMuted,
-  padding: "24px 0",
+  padding: "32px 0",
 });

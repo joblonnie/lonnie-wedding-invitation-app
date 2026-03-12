@@ -12,22 +12,18 @@ export const toggleButton = style({
   appearance: "none",
   border: `1px solid ${vars.color.border}`,
   background: vars.color.surface,
-  color: vars.color.text,
-  width: 44,
-  height: 44,
+  color: vars.color.primary,
+  width: 40,
+  height: 40,
   borderRadius: "50%",
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: 18,
-  boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.06)",
   transition: "all 0.2s ease",
-  selectors: {
-    "&:hover": {
-      boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-      transform: "scale(1.05)",
-    },
+  ":active": {
+    transform: "scale(0.95)",
   },
 });
 
@@ -37,10 +33,10 @@ export const dropdown = style({
   right: 0,
   background: vars.color.surface,
   border: `1px solid ${vars.color.border}`,
-  borderRadius: 12,
-  boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+  borderRadius: vars.radius.md,
+  boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
   overflow: "hidden",
-  minWidth: 120,
+  minWidth: 130,
 });
 
 export const dropdownItem = style({
@@ -55,24 +51,19 @@ export const dropdownItem = style({
   alignItems: "center",
   gap: 10,
   fontSize: 14,
+  fontFamily: vars.font.handwriting,
   transition: "background 0.15s ease",
-  selectors: {
-    "&:hover": {
-      background: vars.color.background,
-    },
+  ":active": {
+    background: vars.color.background,
   },
 });
 
 export const dropdownItemActive = style({
   color: vars.color.primary,
-  fontWeight: 500,
+  fontWeight: 700,
 });
 
 export const flag = style({
-  fontSize: 16,
+  fontSize: 15,
+  lineHeight: 1,
 });
-
-export const picker = style({});
-export const pickerButton = style({});
-export const pickerButtonActive = style({});
-export const pickerLabel = style({});

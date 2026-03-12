@@ -1,5 +1,10 @@
-import { style } from "@vanilla-extract/css";
+import { style, keyframes } from "@vanilla-extract/css";
 import { vars } from "./theme/theme.css";
+
+const fadeIn = keyframes({
+  from: { opacity: 0 },
+  to: { opacity: 1 },
+});
 
 export const carouselContainer = style({
   position: "relative",
@@ -7,6 +12,8 @@ export const carouselContainer = style({
   overflow: "hidden",
   userSelect: "none",
   WebkitUserSelect: "none",
+  borderRadius: vars.radius.md,
+  border: `1px solid ${vars.color.border}`,
 });
 
 export const carouselTrack = style({
@@ -15,7 +22,6 @@ export const carouselTrack = style({
 
 export const carouselSlide = style({
   minWidth: "100%",
-  padding: "0 4px",
   boxSizing: "border-box",
   cursor: "pointer",
 });
@@ -24,38 +30,31 @@ export const image = style({
   width: "100%",
   aspectRatio: "4 / 3",
   objectFit: "cover",
-  borderRadius: 8,
+  display: "block",
   background: vars.color.background,
   pointerEvents: "none",
+  animation: `${fadeIn} 0.4s ease`,
 });
 
 export const carouselNav = style({
   position: "absolute",
   top: "50%",
   transform: "translateY(-50%)",
-  width: 40,
-  height: 40,
+  width: 36,
+  height: 36,
   borderRadius: "50%",
-  border: "none",
-  background: "rgba(255,255,255,0.9)",
-  boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+  border: `1px solid ${vars.color.border}`,
+  background: vars.color.surface,
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: 18,
-  color: vars.color.text,
+  color: vars.color.primary,
   transition: "all 0.2s ease",
   zIndex: 10,
-  selectors: {
-    "&:hover": {
-      background: "#fff",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-    },
-    "&:disabled": {
-      opacity: 0.3,
-      cursor: "not-allowed",
-    },
+  padding: 0,
+  ":active": {
+    transform: "translateY(-50%) scale(0.95)",
   },
 });
 
@@ -75,11 +74,11 @@ export const indicators = style({
 });
 
 export const indicator = style({
-  width: 8,
-  height: 8,
+  width: 7,
+  height: 7,
   borderRadius: "50%",
-  border: "none",
-  background: vars.color.border,
+  border: `1px solid ${vars.color.border}`,
+  background: "transparent",
   cursor: "pointer",
   padding: 0,
   transition: "all 0.2s ease",
@@ -87,5 +86,6 @@ export const indicator = style({
 
 export const indicatorActive = style({
   background: vars.color.primary,
-  transform: "scale(1.2)",
+  borderColor: vars.color.primary,
+  transform: "scale(1.3)",
 });

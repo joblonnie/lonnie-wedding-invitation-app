@@ -2,12 +2,8 @@ import { useEffect, useMemo, useState, useCallback, Suspense, type ReactNode } f
 import {
   appContainer,
   card,
-  headerRow,
-  headerTitle,
   headerSubtitle,
   greeting as greetingStyle,
-  row,
-  section,
   sectionTitle,
   divider,
   scrollRevealHidden,
@@ -23,7 +19,7 @@ import {
 import { detectDefaultLanguage, type Language, t } from "../ui/i18n";
 import { DEFAULT_INVITATION } from "../ui/invitation/defaultInvitation";
 import { setSocialMeta } from "../ui/meta/setSocialMeta";
-import { ShareActions } from "./ShareActions";
+import { CeremonyPage } from "./CeremonyPage";
 import { themeClassFromName, type ThemeName } from "./theme/theme";
 import { LanguagePicker } from "./LanguagePicker";
 import { MapSection } from "./MapSection";
@@ -33,7 +29,7 @@ import { CelebrationButton } from "./CelebrationButton";
 import { BulkShare } from "./BulkShare";
 import { HeroIllust } from "./HeroIllust";
 import { GuestBook } from "./GuestBook";
-import { AccountModal } from "./AccountModal";
+import { AccountSection } from "./AccountSection";
 import { ShareModal } from "./ShareModal";
 import { downloadIcs } from "./calendar/downloadIcs";
 import { useScrollReveal } from "./hooks/useScrollReveal";
@@ -91,6 +87,15 @@ function buildGoogleCalendarUrl(title: string, start: Date, end: Date, location:
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
+function PageHeader({ icon, title }: { icon: ReactNode; title: string }) {
+  return (
+    <div style={{ textAlign: "center", marginBottom: 24 }}>
+      <span style={{ display: "inline-block", color: "var(--primary)", marginBottom: 8 }}>{icon}</span>
+      <h2 className={sectionTitle} style={{ margin: 0 }}>{title}</h2>
+    </div>
+  );
+}
+
 function ScrollRevealSection({ children }: { children: ReactNode }) {
   const { ref, isVisible } = useScrollReveal(0.15);
   return (
@@ -109,7 +114,6 @@ export function App() {
   );
   const [themeName] = useState<ThemeName>(() => readThemeOverride() ?? invitation.theme);
   const themeClass = themeClassFromName(themeName);
-  const [showAccountModal, setShowAccountModal] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [page, setPage] = useState<Page>(() => readPage());
 
@@ -200,10 +204,7 @@ export function App() {
           <div className={card}>
             {backBtn}
             <ScrollRevealSection>
-              <header className={headerRow}>
-                <p className={headerTitle}>{strings.ourStoryTitle}</p>
-                <OurStory invitation={invitation} language={language} />
-              </header>
+              <OurStory invitation={invitation} language={language} />
             </ScrollRevealSection>
           </div>
         );
@@ -213,24 +214,10 @@ export function App() {
           <div className={card}>
             {backBtn}
             <ScrollRevealSection>
-              <section className={section} style={{ marginTop: 0 }}>
-                <h2 className={sectionTitle}>{strings.eventTitle}</h2>
-                <div className={row}>
-                  <p style={{ fontSize: 18, fontWeight: 300, margin: 0 }}>
-                    {invitation.event.whenText[language]}
-                  </p>
-                  <p style={{ fontSize: 15, color: "var(--textMuted)", margin: "8px 0 0" }}>
-                    {invitation.event.whereText[language]}
-                  </p>
-                </div>
-                <ShareActions
-                  invitation={invitation}
-                  language={language}
-                  onBulkShare={handleGoToBulk}
-                  onAccountInfo={invitation.accounts ? () => setShowAccountModal(true) : undefined}
-                />
-                <CelebrationButton themeName={themeName} />
-              </section>
+              <CeremonyPage
+                invitation={invitation}
+                language={language}
+              />
             </ScrollRevealSection>
           </div>
         );
@@ -239,11 +226,9 @@ export function App() {
         return (
           <div className={card}>
             {backBtn}
+            <PageHeader icon={<IconGallery />} title={strings.photosTitle} />
             <ScrollRevealSection>
-              <section className={section} style={{ marginTop: 0 }}>
-                <h2 className={sectionTitle}>{strings.photosTitle}</h2>
-                <PhotoGallery invitation={invitation} language={language} />
-              </section>
+              <PhotoGallery invitation={invitation} language={language} />
             </ScrollRevealSection>
           </div>
         );
@@ -252,11 +237,9 @@ export function App() {
         return (
           <div className={card}>
             {backBtn}
+            <PageHeader icon={<IconMap />} title={strings.mapTitle} />
             <ScrollRevealSection>
-              <section className={section} style={{ marginTop: 0 }}>
-                <h2 className={sectionTitle}>{strings.mapTitle}</h2>
-                <MapSection invitation={invitation} language={language} />
-              </section>
+              <MapSection invitation={invitation} language={language} />
             </ScrollRevealSection>
           </div>
         );
@@ -265,11 +248,9 @@ export function App() {
         return (
           <div className={card}>
             {backBtn}
+            <PageHeader icon={<IconGuestbook />} title={strings.guestBook} />
             <ScrollRevealSection>
-              <section className={section} style={{ marginTop: 0 }}>
-                <h2 className={sectionTitle}>{strings.guestBook}</h2>
-                <GuestBook language={language} />
-              </section>
+              <GuestBook language={language} />
             </ScrollRevealSection>
           </div>
         );
@@ -374,7 +355,22 @@ export function App() {
               </button>
             </nav>
 
-            <p className={headerSubtitle} style={{ marginTop: 56, textAlign: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
+              <CelebrationButton themeName={themeName} />
+            </div>
+
+            {invitation.accounts && (
+              <>
+                <div className={divider} />
+                <AccountSection
+                  language={language}
+                  groomAccounts={invitation.accounts.groom}
+                  brideAccounts={invitation.accounts.bride}
+                />
+              </>
+            )}
+
+            <p className={headerSubtitle} style={{ marginTop: 32, textAlign: "center" }}>
               {strings.subtitle}
             </p>
           </div>
@@ -397,15 +393,6 @@ export function App() {
           <PetalRain active={petalActive} />
 
           {renderPage()}
-
-          {showAccountModal && invitation.accounts && (
-            <AccountModal
-              language={language}
-              groomAccounts={invitation.accounts.groom}
-              brideAccounts={invitation.accounts.bride}
-              onClose={() => setShowAccountModal(false)}
-            />
-          )}
 
           {showShareModal && (
             <ShareModal

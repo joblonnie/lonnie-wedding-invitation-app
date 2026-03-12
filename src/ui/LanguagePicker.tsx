@@ -53,7 +53,12 @@ export function LanguagePicker({
         aria-label="Change language"
         aria-expanded={isOpen}
       >
-        <span>🌐</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3.5 9h17M3.5 15h17" />
+          <path d="M12 3c-3 3-3 9 0 18" />
+          <path d="M12 3c3 3 3 9 0 18" />
+        </svg>
       </button>
 
       {isOpen && (

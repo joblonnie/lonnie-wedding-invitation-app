@@ -25,6 +25,8 @@ type Strings = {
   subway: string;
   bus: string;
   parking: string;
+  externalParking: string;
+  shuttle: string;
   navigation: string;
   kakaoNavi: string;
   tmap: string;
@@ -59,6 +61,7 @@ type Strings = {
   guestEmpty: string;
   guestPasswordForDelete: string;
   tapToOpen: string;
+  ceremonyOrder: string;
   // 네비게이션
   navStory: string;
   navEvent: string;
@@ -94,6 +97,8 @@ const DICT: Record<Language, Strings> = {
     subway: "지하철",
     bus: "버스",
     parking: "주차",
+    externalParking: "외부 주차장",
+    shuttle: "셔틀버스",
     navigation: "네비게이션",
     kakaoNavi: "카카오내비",
     tmap: "티맵",
@@ -128,6 +133,7 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "첫 번째 축하 메시지를 남겨주세요!",
     guestPasswordForDelete: "비밀번호를 입력해주세요",
     tapToOpen: "터치하여 열기",
+    ceremonyOrder: "식 순",
     navStory: "우리 이야기",
     navEvent: "예식 안내",
     navGallery: "갤러리",
@@ -160,6 +166,8 @@ const DICT: Record<Language, Strings> = {
     subway: "Subway",
     bus: "Bus",
     parking: "Parking",
+    externalParking: "Nearby Parking",
+    shuttle: "Shuttle Bus",
     navigation: "Navigation",
     kakaoNavi: "Kakao Navi",
     tmap: "T-map",
@@ -194,6 +202,7 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "Be the first to leave a message!",
     guestPasswordForDelete: "Enter password",
     tapToOpen: "Tap to open",
+    ceremonyOrder: "Ceremony Order",
     navStory: "Our Story",
     navEvent: "Ceremony",
     navGallery: "Gallery",
@@ -226,6 +235,8 @@ const DICT: Record<Language, Strings> = {
     subway: "地铁",
     bus: "公交",
     parking: "停车",
+    externalParking: "附近停车场",
+    shuttle: "班车",
     navigation: "导航",
     kakaoNavi: "Kakao导航",
     tmap: "T-map",
@@ -260,6 +271,7 @@ const DICT: Record<Language, Strings> = {
     guestEmpty: "成为第一个留言的人吧！",
     guestPasswordForDelete: "请输入密码",
     tapToOpen: "点击打开",
+    ceremonyOrder: "仪式流程",
     navStory: "我们的故事",
     navEvent: "婚礼信息",
     navGallery: "相册",

@@ -38,8 +38,10 @@ export type Invitation = {
     transportation: {
       subway?: { ko: string; en: string; zh: string };
       bus?: { ko: string; en: string; zh: string };
+      shuttle?: { ko: string; en: string; zh: string };
       car?: { ko: string; en: string; zh: string };
       parking?: { ko: string; en: string; zh: string };
+      externalParking?: { ko: string; en: string; zh: string };
     };
   };
 };

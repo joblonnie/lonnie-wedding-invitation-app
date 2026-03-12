@@ -112,6 +112,11 @@ export const DEFAULT_INVITATION: Invitation = {
         en: "Bus 147, 240, 463 / 3411, 4211",
         zh: "干线147、240、463 / 支线3411、4211",
       },
+      shuttle: {
+        ko: "학동역 10번 출구 앞 셔틀버스 운행 (10분 간격)\n예식 1시간 전부터 ~ 예식 후 1시간까지",
+        en: "Shuttle bus from Hakdong Station Exit 10 (every 10 min)\n1 hour before ~ 1 hour after ceremony",
+        zh: "鹤洞站10号出口前班车运行（每10分钟一班）\n仪式前1小时至仪式后1小时",
+      },
       car: {
         ko: "네비게이션 '루클라비 더화이트' 검색",
         en: "Search 'LUKLAVI THE WHITE' in navigation",
@@ -121,6 +126,11 @@ export const DEFAULT_INVITATION: Invitation = {
         ko: "건물 내 주차장 이용 (2시간 무료)",
         en: "Building parking available (2 hours free)",
         zh: "大厦停车场可用（2小时免费）",
+      },
+      externalParking: {
+        ko: "논현 공영주차장 (도보 3분, 10분당 500원)\n강남구청 공영주차장 (도보 5분, 무료)",
+        en: "Nonhyeon Public Parking (3 min walk, ₩500/10min)\nGangnam-gu Office Parking (5 min walk, free)",
+        zh: "论岘公共停车场（步行3分钟，500韩元/10分钟）\n江南区厅公共停车场（步行5分钟，免费）",
       },
     },
   },
